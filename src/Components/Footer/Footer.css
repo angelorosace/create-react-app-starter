@@ -1,37 +1,52 @@
 /* Footer.css */
 .footer {
-    background-color: transparent; /* Transparent footer */
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+    background-color: transparent; /* Make the background transparent */
+  color: white;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 1000;
   }
   
   .footer-buttons {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end; /* Align button to the right */
   }
   
   .footer-button {
-    margin: 5px;
-    padding: 10px 20px;
-    background-color: white; /* Gray-white button */
-    border: none;
-    border-radius: 50px; /* Round button */
-    color: gray; /* Text color */
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow backdrop */
+    background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  }
+
+  .footer-button:hover {
+    background-color: #0056b3; /* Hover background color */
+  }
+
+  /* Adjust the icon color */
+.round-button i {
+    color: white;
   }
   
-  /* Media query for mobile view */
+  /* Media query for mobile optimization */
   @media (max-width: 768px) {
     .footer-buttons {
-      flex-direction: row; /* Keep buttons in a single row */
+      flex-direction: row;
+      justify-content: flex-end; /* Align button to the right */
     }
   }
+  
