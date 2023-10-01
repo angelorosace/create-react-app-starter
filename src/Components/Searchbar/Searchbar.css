@@ -1,0 +1,32 @@
+/* SearchBar.css */
+.search-bar {
+    background-color: #f0f0f0;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 10px; /* Leave some space at the sides */
+    border-radius: 5px;
+  }
+  
+  .search-icon {
+    margin-right: 10px;
+    color: #333;
+    font-size: 20px;
+  }
+  
+  .search-input {
+    flex-grow: 1; /* Expands to fill available space */
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding: 5px;
+  }
+  
+  /* Media query for mobile optimization */
+  @media (max-width: 768px) {
+    .search-bar {
+      margin: 0; /* Full width for mobile */
+    }
+  }
+  
