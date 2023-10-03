@@ -1,0 +1,136 @@
+/* FormScreen.css */
+.animal-creation-form h1 {
+    color: black;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column; /* Change flex direction to row */
+    justify-content: flex-start; /* Right-align labels within the form group */
+    align-items: flex-start; /* Align form elements vertically */
+  }
+  
+  /* Style the labels to be black and right-align them */
+  .form-group label {
+    color: black;
+     /* Add space between label and input field */
+    text-align: left; /* Right-align the labels */
+    flex: 1; /* Allow labels to take up available space */
+    margin-bottom: 5px;
+  }
+  
+  /* Add any other styling you need for your form fields */
+  .form-group input[type="text"],
+  .form-group input[type="file"],
+  .form-group select,
+  .form-group textarea {
+    /* Add your input field styles here */
+    flex: 1; /* Allow input fields to take up more space */
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  .error-message {
+    color: red;
+    font-weight: bold;
+  }
+
+  button {
+    width: 80px;
+    text-align: center;
+    justify-content: center;
+    margin: 5px 0px 0px 5px;
+  }
+
+  button[type="submit"] {
+    background-color: #007AFF; /* Apple's blue color */
+    color: white;
+    border: 2px solid #007AFF;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0058C7; /* Slightly darker blue on hover */
+  }
+
+  .cancel-button {
+    background-color: transparent;
+    color: #007AFF; /* Apple's blue color */
+    font-weight: bold;
+    border: 2px solid #007AFF;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  
+  .cancel-button:hover {
+    background-color: #007AFF;
+    color: white;
+  }
+  
+  /* Additional styles for consistency with Apple's design */
+  .cancel-button:focus {
+    outline: none; /* Remove the default focus outline */
+  }
+
+  .icon-scroll-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden; /* Hide horizontal overflow */
+    width: 100%; /* Ensure the container takes full width */
+  }
+  
+  .icons {
+    display: flex;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    gap: 20px;
+    padding: 10px;
+    width: 100%; /* Ensure the icons container takes full width */
+    white-space: nowrap; /* Prevent wrapping to next line */
+  }
+  
+  .icon {
+    width: 30px;
+    height: 30px;
+    background-color: #007AFF; /* Example background color */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    font-weight: bold;
+  }
+
+  .selected-icon {
+    background-color: #007AFF; /* Example background color */
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 5px 10px; /* Adjust padding as needed */
+    margin-right: 5px; /* Add spacing between selected icons */
+    margin-bottom: 5px; /* Add spacing between rows of selected icons */
+    display: inline-block; /* Display selected icons in a horizontal line */
+    cursor: pointer; /* Add a pointer cursor for interaction */
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  
+  .selected-icon:hover {
+    background-color: #0058C7; /* Slightly darker blue on hover */
+  }
+
+  .selected {
+    background-color: #0058C7; /* New background color when selected */
+    /* You can change other styles, such as color, here */
+  }
