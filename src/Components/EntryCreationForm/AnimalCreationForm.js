@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import './AnimalCreationForm.css'; // Import the CSS file
+import '@fortawesome/fontawesome-free/css/all.css';
 
 function AnimalCreationForm({onClose}) {
   // Define state variables to store form input values
   const [formData, setFormData] = useState({
-    photo: null,
+    photo: [],
     name: '',
     taxonomy: '',
     etymology: '',
@@ -20,21 +21,19 @@ function AnimalCreationForm({onClose}) {
 
   // Array of available icons
   const icons = [
-    { id: 1, name: 'Icon 1' },
-    { id: 2, name: 'Icon 2' },
-    { id: 3, name: 'Icon 3' },
-    { id: 4, name: 'Icon 4' },
-    { id: 5, name: 'Icon 5' },
-    { id: 6, name: 'Icon 6' },
-    { id: 7, name: 'Icon 7' },
-    { id: 8, name: 'Icon 8' },
-    { id: 9, name: 'Icon 9' },
-    { id: 10, name: 'Icon 10' },
+    { id: 'CR', name: 'CR' },
+    { id: 'EN', name: 'EN' },
+    { id: 'VU', name: 'VU' },
+    { id: 'NT', name: 'NT' },
+    { id: 'LC', name: 'LC' },
+    { id: 'NE', name: 'NE' },
   ];
 
   const [selectedIcons, setSelectedIcons] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   // Define error state variables for each field
+  const [selectedFilesError, setSelectedFilesError] = useState('');
   const [nameError, setNameError] = useState('');
   const [taxonomyError, setTaxonomyError] = useState('');
   const [etymologyError, setEtymologyError] = useState('');
@@ -44,6 +43,10 @@ function AnimalCreationForm({onClose}) {
   const [dimensionsError, setDimensionsError] = useState('');
   const [dsError, setDSError] = useState('');
   const [dietError, setDietError] = useState('');
+
+  const [isFormVisible, setFormVisible] = useState(true);
+  const [isSuccessVisible, setSuccessVisible] = useState(false);
+  const [isErrorVisible, setErrorVisible] = useState(false);
 
   // Handle form input changes
   const handleInputChange = (e) => {
@@ -64,28 +67,34 @@ function AnimalCreationForm({onClose}) {
       // If single-clicked, add the icon to the array
       setSelectedIcons([...selectedIcons, iconId]);
     }
-    setFormData({
-      ...formData,
-      iucn: [...formData.iucn,selectedIcons],
-    });
   };
 
-  // Handle photo upload
-  const handlePhotoUpload = (e) => {
-    const file = e.target.files[0];
-    setFormData({
-      ...formData,
-      photo: file,
-    });
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files).slice(0, 5); // Limit to 5 files
+    setSelectedFiles(files);
+  };
+
+  const removeFile = (index) => {
+    const newFiles = [...selectedFiles];
+    newFiles.splice(index, 1);
+    setSelectedFiles(newFiles);
   };
 
   // Handle form submission
   const handleSubmit = (e) => {
-    console.log(formData)
 
     e.preventDefault();
     // Perform validation
     let isValid = true;
+
+    formData.photo = selectedFiles;
+
+    if (formData.photo.length === 0) {
+      setSelectedFilesError('At least a picture is required is required');
+      isValid = false;
+    } else {
+      setSelectedFilesError('');
+    }
 
     if (formData.name.trim() === '') {
       setNameError('Name is required');
@@ -150,165 +159,208 @@ function AnimalCreationForm({onClose}) {
       setDietError('');
     }
 
+    formData.iucn = selectedIcons;
+
     // If there are errors, prevent submission
     if (!isValid) {
       return;
     }
 
-    // Process form data, including the uploaded photo
-    console.log('Form data submitted:', formData);
+
+    if (true){ // TODO: chage to condition on whether or not the data was saved on the DB
+      
+      console.log('Form data submitted:', formData);
+
+      setFormVisible(false);
+      setSuccessVisible(true);
+    } else {
+      setFormVisible(false);
+      setErrorVisible(true);
+    }
+
+    setTimeout(() => {
+      onClose();
+    }, 2000);
   };
 
   return (
-    <div className="animal-creation-form">
-      <h1>Species Information Form</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="photo">Upload Photo</label>
-          <input
-            type="file"
-            id="photo"
-            name="photo"
-            accept="image/*" // Allow only image files
-            onChange={handlePhotoUpload}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-          />
-          <div className="error-message">{nameError}</div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="taxonomy">Taxonomy</label>
-          <input
-            type="text"
-            id="taxonomy"
-            name="taxonomy"
-            value={formData.taxonomy}
-            onChange={handleInputChange}
-          />
-          <div className="error-message">{taxonomyError}</div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="etymology">Etymology</label>
-          <input
-            type="text"
-            id="etymology"
-            name="etymology"
-            value={formData.etymology}
-            onChange={handleInputChange}
-          />
-          <div className="error-message">{etymologyError}</div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="iucn">IUCN</label>
-          <div className="icon-scroll-container">
-            <div className="icons">
-              {icons.map((icon) => (
-                <div
-                  key={icon.id}
-                  className={`icon ${selectedIcons.includes(icon.id) ? 'selected' : ''}`}
-                  onClick={() => handleIconClick(icon.id)}
-                >
-                  {icon.name}
+    <div>
+      {isFormVisible && (
+        <div className="animal-creation-form">
+        <h1>Informazioni sull'animale</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="photo">Foto</label>
+            <input type="file" id="photo" name="photo" accept="image/*" multiple onChange={handleFileChange} />
+            {selectedFiles.length > 0 && (
+              <div className="image-preview">
+                <div className="preview-container">
+                  {selectedFiles.map((file, index) => (
+                    <div key={index} className='file'>
+                    <div className="file-wrapper"> {/* Add a wrapper */}
+                    <img
+                      key={index}
+                      src={URL.createObjectURL(file)}
+                      alt={`Preview ${index}`}
+                      className="preview-image" // Add a CSS class
+                    />
+                    <i
+                    className="fas fa-times remove-icon"
+                    onClick={() => removeFile(index)}
+                    ></i>
+                  </div>
+                  </div>   
+                  ))}   
                 </div>
-              ))}
-            </div>
-            <div className="selected-icons">
-              {selectedIcons.map((selectedIcon) => (
-                <div key={selectedIcon} className="selected-icon">
-                  Icon {selectedIcon}
-                </div>
-              ))}
+              </div>
+            )}
+            <div className="error-message">{selectedFilesError}</div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="name">Nome</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+            />
+            <div className="error-message">{nameError}</div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="taxonomy">Taxon</label>
+            <input
+              type="text"
+              id="taxonomy"
+              name="taxonomy"
+              value={formData.taxonomy}
+              onChange={handleInputChange}
+            />
+            <div className="error-message">{taxonomyError}</div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="etymology">Etimologia</label>
+            <input
+              type="text"
+              id="etymology"
+              name="etymology"
+              value={formData.etymology}
+              onChange={handleInputChange}
+            />
+            <div className="error-message">{etymologyError}</div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="iucn">IUCN</label>
+            <div className="icon-scroll-container">
+              <div className="icons">
+                {icons.map((icon) => (
+                  <div
+                    key={icon.id}
+                    className={`icon ${selectedIcons.includes(icon.id) ? 'selected' : ''} ${icon.id}`}
+                    onClick={() => handleIconClick(icon.id)}
+                  >
+                    {icon.name}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
+          <div className="form-group">
+            <label htmlFor="geo">Geografia</label>
+            <input
+              type="text"
+              id="geo"
+              name="geo"
+              value={formData.geo}
+              onChange={handleInputChange}
+            />
+            <div className="error-message">{geoError}</div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="migration">Migrazione</label>
+            <input
+              type="text"
+              id="migration"
+              name="migration"
+              value={formData.migration}
+              onChange={handleInputChange}
+            />
+            <div className="error-message">{migrationError}</div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="habitat">Habitat</label>
+            <input
+              type="text"
+              id="habitat"
+              name="habitat"
+              value={formData.habitat}
+              onChange={handleInputChange}
+            />
+            <div className="error-message">{habitatError}</div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="dimensions">Dimensioni</label>
+            <input
+              type="text"
+              id="dimensions"
+              name="dimensions"
+              value={formData.dimensions}
+              onChange={handleInputChange}
+            />
+            <div className="error-message">{dimensionsError}</div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="ds">Dimorfismo Sessuale</label>
+            <input
+              type="text"
+              id="ds"
+              name="ds"
+              value={formData.ds}
+              onChange={handleInputChange}
+            />
+            <div className="error-message">{dsError}</div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="diet">Dieta</label>
+            <input
+              type="text"
+              id="diet"
+              name="diet"
+              value={formData.diet}
+              onChange={handleInputChange}
+            />
+            <div className="error-message">{dietError}</div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="diet">Descrizione</label>
+            <input
+              type="text"
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+            />
+          </div>
+          <button type="submit">Aggiungi</button>
+          <button type="button" className="cancel-button" onClick={onClose}>Cancella</button>
+        </form>
+      </div>
+      )
+    };
+    {isSuccessVisible && (
+        <div className="success-message">
+          <i className="fas fa-check-circle fa-5x"></i>
+          <p className="success-text">Animale aggiunto correttamente!</p>
         </div>
-        <div className="form-group">
-          <label htmlFor="geo">Geo</label>
-          <input
-            type="text"
-            id="geo"
-            name="geo"
-            value={formData.geo}
-            onChange={handleInputChange}
-          />
-          <div className="error-message">{geoError}</div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="migration">Migration</label>
-          <input
-            type="text"
-            id="migration"
-            name="migration"
-            value={formData.migration}
-            onChange={handleInputChange}
-          />
-          <div className="error-message">{migrationError}</div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="habitat">Habitat</label>
-          <input
-            type="text"
-            id="habitat"
-            name="habitat"
-            value={formData.habitat}
-            onChange={handleInputChange}
-          />
-          <div className="error-message">{habitatError}</div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="dimensions">Dimensions</label>
-          <input
-            type="text"
-            id="dimensions"
-            name="dimensions"
-            value={formData.dimensions}
-            onChange={handleInputChange}
-          />
-          <div className="error-message">{dimensionsError}</div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="ds">Ds</label>
-          <input
-            type="text"
-            id="ds"
-            name="ds"
-            value={formData.ds}
-            onChange={handleInputChange}
-          />
-          <div className="error-message">{dsError}</div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="diet">Diet</label>
-          <input
-            type="text"
-            id="diet"
-            name="diet"
-            value={formData.diet}
-            onChange={handleInputChange}
-          />
-          <div className="error-message">{dietError}</div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="diet">Description</label>
-          <input
-            type="text"
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleInputChange}
-          />
-        </div>
-        <button type="submit">Add</button>
-        <button type="button" className="cancel-button" onClick={onClose}>Cancel</button>
-      </form>
+    )};
+    {isErrorVisible && (
+      <div className="error-feedback">
+        <i className="fas fa-exclamation-circle fa-5x"></i>
+        <p className="error-text">Qualcosa e' andato storto!</p>
+      </div>
+    )};
     </div>
+    
   );
 }
 

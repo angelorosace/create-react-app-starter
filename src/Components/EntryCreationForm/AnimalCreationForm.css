@@ -102,8 +102,7 @@
   .icon {
     width: 30px;
     height: 30px;
-    background-color: #007AFF; /* Example background color */
-    color: white;
+    color: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -130,7 +129,127 @@
     background-color: #0058C7; /* Slightly darker blue on hover */
   }
 
-  .selected {
-    background-color: #0058C7; /* New background color when selected */
-    /* You can change other styles, such as color, here */
-  }
+  /* Add these styles to your CSS */
+.image-preview {
+  text-align: center;
+}
+
+.preview-container {
+  display: flex;
+  flex-wrap: nowrap; /* Prevent images from wrapping to the next line */
+  overflow-x: auto; /* Enable horizontal scrolling if necessary */
+}
+
+.preview-image {
+  width: 80px; /* Adjust the width and height as desired */
+  height: 80px;
+  margin-right: 10px; /* Add spacing between images */
+  object-fit: cover; /* Preserve aspect ratio while filling the square container */
+}
+
+/* Add these styles to your CSS */
+.file {
+  position: relative; /* Make the parent container relative */
+  display: inline-block; /* Ensure the container only takes the necessary space */
+}
+
+.preview-image {
+  width: 80px; /* Adjust the width and height as needed */
+  height: 80px;
+  object-fit: cover; /* Preserve aspect ratio while filling the square container */
+}
+
+.remove-icon {
+  position: absolute; /* Position the X icon absolutely */
+  top: 0; /* Place it at the top of the container */
+  right: 0; /* Place it at the right corner of the container */
+  color: #0058C7; /* Change the color to your preference */
+  font-size: 24px; /* Adjust the font size as needed */
+  cursor: pointer; /* Add a pointer cursor for interaction */
+}
+
+.CR {
+  background-color:red;
+  border: 2px solid red;
+}
+
+.CR.selected {
+  border: 2px solid #0058C7;
+}
+
+.EN {
+  background-color: orange;
+  border: 2px solid orange;
+}
+
+.EN.selected {
+  border: 2px solid #0058C7;
+}
+
+.VU {
+  background-color: rgb(219, 219, 72);
+  border: 2px solid rgb(219, 219, 72);
+}
+
+.VU.selected {
+  border: 2px solid #0058C7;
+}
+
+.NT {
+  background-color: greenyellow;
+  border: 2px solid greenyellow;
+}
+
+.NT.selected {
+  border: 2px solid #0058C7;
+}
+
+.LC {
+  background-color: rgb(29, 165, 29);
+  border: 2px solid rgb(29, 165, 29);
+}
+
+.LC.selected {
+  border: 2px solid #0058C7;
+}
+
+.NE {
+  background-color: white;
+  color: black;
+  border: 2px dotted black;
+}
+
+.NE.selected {
+  border: 2px solid #0058C7;
+}
+
+/* CSS styles for the success message */
+.success-message {
+  background-color: #4caf50; /* Background color */
+  color: #fff; /* Text color */
+  padding: 10px; /* Padding around the message */
+  border-radius: 5px; /* Rounded corners */
+  text-align: center; /* Center-align text */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle effect */
+}
+
+.success-text {
+  font-size: 26px; /* Font size */
+  font-weight: bold; /* Bold text */
+}
+
+/* CSS styles for the error message */
+.error-feedback {
+  background-color: #ff5733; /* Error message background color */
+  color: #fff; /* Text color */
+  padding: 10px; /* Padding around the message */
+  border-radius: 5px; /* Rounded corners */
+  text-align: center; /* Center-align text */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle effect */
+}
+
+.error-text {
+  font-size: 26px; /* Font size */
+  font-weight: bold; /* Bold text */
+}
+
