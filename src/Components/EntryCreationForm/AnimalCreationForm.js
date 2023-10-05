@@ -173,7 +173,7 @@ function AnimalCreationForm({onClose}) {
 
     try {
       // Replace 'your-api-endpoint' with the actual API endpoint
-      const response = await Axios.post('http://localhost:4000/animal', formData, {headers});
+      const response = await Axios.post('https://anidexapi-production.up.railway.app/animal', formData, {headers});
 
       // Handle the response from the server
       console.log('Response:', response.data);
