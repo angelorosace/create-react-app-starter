@@ -1,6 +1,7 @@
 import React, { useState} from 'react';
 import './AnimalCreationForm.css'; // Import the CSS file
 import '@fortawesome/fontawesome-free/css/all.css';
+import Axios from 'axios';
 
 function AnimalCreationForm({onClose}) {
   // Define state variables to store form input values
@@ -18,6 +19,10 @@ function AnimalCreationForm({onClose}) {
     diet: '',
     description: '',
   });
+
+  const headers = {
+    'Content-Type': 'multipart/form-data',
+  };
 
   // Array of available icons
   const icons = [
@@ -81,7 +86,7 @@ function AnimalCreationForm({onClose}) {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
 
     e.preventDefault();
     // Perform validation
@@ -164,6 +169,17 @@ function AnimalCreationForm({onClose}) {
     // If there are errors, prevent submission
     if (!isValid) {
       return;
+    }
+
+    try {
+      // Replace 'your-api-endpoint' with the actual API endpoint
+      const response = await Axios.post('http://localhost:4000/animal', formData, {headers});
+
+      // Handle the response from the server
+      console.log('Response:', response.data);
+    } catch (error) {
+      // Handle errors
+      console.error('Error:', error);
     }
 
 
