@@ -175,21 +175,12 @@ function AnimalCreationForm({onClose}) {
       // Replace 'your-api-endpoint' with the actual API endpoint
       const response = await Axios.post('https://anidexapi-production.up.railway.app/animal', formData, {headers});
 
-      // Handle the response from the server
-      console.log('Response:', response.data);
+      setFormVisible(false);
+      setSuccessVisible(true);
     } catch (error) {
       // Handle errors
       console.error('Error:', error);
-    }
 
-
-    if (true){ // TODO: chage to condition on whether or not the data was saved on the DB
-      
-      console.log('Form data submitted:', formData);
-
-      setFormVisible(false);
-      setSuccessVisible(true);
-    } else {
       setFormVisible(false);
       setErrorVisible(true);
     }
@@ -366,7 +357,7 @@ function AnimalCreationForm({onClose}) {
     {isSuccessVisible && (
         <div className="success-message">
           <i className="fas fa-check-circle fa-5x"></i>
-          <p className="success-text">Animale aggiunto correttamente!</p>
+          <p className="success-text">Nuova specie animale correttamente aggiunta all'Anidex!</p>
         </div>
     )};
     {isErrorVisible && (
