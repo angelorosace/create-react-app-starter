@@ -172,9 +172,9 @@ function AnimalCreationForm({onClose}) {
     }
 
     try {
-      // Replace 'your-api-endpoint' with the actual API endpoint
-      const response = await Axios.post('https://anidexapi-production.up.railway.app/animal', formData, {headers});
-
+      var response = await Axios.post('https://anidexapi-production.up.railway.app/animal', formData, {headers});
+      console.log(response.data.message)
+      
       setFormVisible(false);
       setSuccessVisible(true);
     } catch (error) {
