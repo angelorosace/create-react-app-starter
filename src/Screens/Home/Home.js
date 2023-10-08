@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Home.css'; // You can create a CSS file for styling
 import Searchbar from '../../Components/Searchbar/Searchbar';
 import Footer from '../../Components/Footer/Footer';
