@@ -103,7 +103,7 @@ function AnimalCreationForm({onClose}) {
       setSelectedFilesError('');
     }
 
-    if (formData.category.trim() === '') {
+    if (formData.category.trim() === '' || formData.category === '-') {
       setCategoryError("Seleziona una categoria")
       isValid = false
     } else {
@@ -240,6 +240,7 @@ function AnimalCreationForm({onClose}) {
               value={formData.category} 
               onChange={handleInputChange}
             >
+              <option value="0">-</option>
               <option value="1">Mammiferi</option>
               <option value="2">Uccelli</option>
               <option value="3">Insetti</option>
