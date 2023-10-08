@@ -10,10 +10,10 @@ function HomeScreen() {
   const [categories, setCategories] = useState([]);
   
   useEffect(() => {
-    const apiUrl = 'https://anidexapi-production.up.railway.app/categories';
 
-    axios.get(apiUrl)
+    axios.get('https://anidexapi-production.up.railway.app/categories')
       .then((response) => {
+        console.log(response);
         setCategories(response.data.categoryData);
       })
       .catch((error) => {
