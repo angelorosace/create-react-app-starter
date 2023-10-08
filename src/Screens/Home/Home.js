@@ -5,14 +5,28 @@ import Footer from '../../Components/Footer/Footer';
 import Card from '../../Components/Card/Card';
 
 function HomeScreen() {
+
+  const [categories, setCategories] = useState([]);
+  
+  useEffect(() => {
+    const apiUrl = 'https://anidexapi-production.up.railway.app/categories';
+
+    axios.get(apiUrl)
+      .then((response) => {
+        setCategories(response.data.categoryData);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
   return (
     <div className="home-screen">
         <Searchbar/>
         <div className="card-container">
-            <Card label="Card 1" />
-            <Card label="Card 2" />
-            <Card label="Card 3" />
-            {/* Add more cards as needed */}
+          {categories.map((item) => (
+            <Card key={item.id} label={item.name}/>
+          ))}
         </div>
         <Footer/>
     </div>
