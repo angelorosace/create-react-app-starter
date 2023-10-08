@@ -3,6 +3,7 @@ import './Home.css'; // You can create a CSS file for styling
 import Searchbar from '../../Components/Searchbar/Searchbar';
 import Footer from '../../Components/Footer/Footer';
 import Card from '../../Components/Card/Card';
+import axios from 'axios';
 
 function HomeScreen() {
 
