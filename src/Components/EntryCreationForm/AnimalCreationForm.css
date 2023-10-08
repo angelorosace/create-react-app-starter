@@ -23,11 +23,20 @@
   /* Add any other styling you need for your form fields */
   .form-group input[type="text"],
   .form-group input[type="file"],
-  .form-group select,
   .form-group textarea {
     /* Add your input field styles here */
     flex: 1; /* Allow input fields to take up more space */
     width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  .form-group select {
+    /* Add your input field styles here */
+    flex: 1; /* Allow input fields to take up more space */
+    width: 94%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;

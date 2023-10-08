@@ -7,6 +7,7 @@ function AnimalCreationForm({onClose}) {
   // Define state variables to store form input values
   const [formData, setFormData] = useState({
     photo: [],
+    category:'',
     name: '',
     taxonomy: '',
     etymology: '',
@@ -39,6 +40,7 @@ function AnimalCreationForm({onClose}) {
 
   // Define error state variables for each field
   const [selectedFilesError, setSelectedFilesError] = useState('');
+  const [categoryError, setCategoryError] = useState('');
   const [nameError, setNameError] = useState('');
   const [taxonomyError, setTaxonomyError] = useState('');
   const [etymologyError, setEtymologyError] = useState('');
@@ -95,70 +97,77 @@ function AnimalCreationForm({onClose}) {
     formData.photo = selectedFiles;
 
     if (formData.photo.length === 0) {
-      setSelectedFilesError('At least a picture is required is required');
+      setSelectedFilesError('Ho bisogno di almeno una foto');
       isValid = false;
     } else {
       setSelectedFilesError('');
     }
 
+    if (formData.category.trim() === '') {
+      setCategoryError("Seleziona una categoria")
+      isValid = false
+    } else {
+      setCategoryError("")
+    }
+
     if (formData.name.trim() === '') {
-      setNameError('Name is required');
+      setNameError('Manca il nome');
       isValid = false;
     } else {
       setNameError('');
     }
 
     if (formData.taxonomy.trim() === '') {
-      setTaxonomyError('Taxonomy is required');
+      setTaxonomyError('Tassonomia?');
       isValid = false;
     } else {
       setTaxonomyError('');
     }
 
     if (formData.etymology.trim() === '') {
-      setEtymologyError('Etymology is required');
+      setEtymologyError('No Etimologia?');
       isValid = false;
     } else {
       setEtymologyError('');
     }
 
     if (formData.geo.trim() === '') {
-      setGeoError('Geo is required');
+      setGeoError('Geoooooo');
       isValid = false;
     } else {
       setGeoError('');
     }
 
     if (formData.migration.trim() === '') {
-      setMigrationError('Geo is required');
+      setMigrationError('Non migra sto qui?');
       isValid = false;
     } else {
       setMigrationError('');
     }
 
     if (formData.habitat.trim() === '') {
-      setHabitatError('Habitat is required');
+      setHabitatError("Vive nell'iperuranio?");
       isValid = false;
     } else {
       setHabitatError('');
     }
 
     if (formData.dimensions.trim() === '') {
-      setDimensionsError('Dimensions is required');
+      setDimensionsError('Immettere dimensioni');
       isValid = false;
     } else {
       setDimensionsError('');
     }
 
     if (formData.ds.trim() === '') {
-      setDSError('Ds is required');
+      setDSError('Dimorfismo?');
       isValid = false;
     } else {
       setDSError('');
     }
 
     if (formData.diet.trim() === '') {
-      setDietError('Diet is required');
+      setDietError('Non mangia?');
       isValid = false;
     } else {
       setDietError('');
@@ -174,7 +183,7 @@ function AnimalCreationForm({onClose}) {
     try {
       var response = await Axios.post('https://anidexapi-production.up.railway.app/animal', formData, {headers});
       console.log(response.data.message)
-      
+
       setFormVisible(false);
       setSuccessVisible(true);
     } catch (error) {
@@ -187,7 +196,7 @@ function AnimalCreationForm({onClose}) {
 
     setTimeout(() => {
       onClose();
-    }, 2000);
+    }, 3000);
   };
 
   return (
@@ -222,6 +231,26 @@ function AnimalCreationForm({onClose}) {
               </div>
             )}
             <div className="error-message">{selectedFilesError}</div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="name">Categoria</label>
+            <select 
+              id="category"
+              name="category"
+              value={formData.category} 
+              onChange={handleInputChange}
+            >
+              <option value="1">Mammiferi</option>
+              <option value="2">Uccelli</option>
+              <option value="3">Insetti</option>
+              <option value="4">Aracnidi</option>
+              <option value="5">Invertebrati</option>
+              <option value="6">Rettili</option>
+              <option value="7">Anfibi</option>
+              <option value="8">Pesci</option>
+              <option value="9">Altro</option>
+            </select>
+            <div className="error-message">{categoryError}</div>
           </div>
           <div className="form-group">
             <label htmlFor="name">Nome</label>
@@ -339,7 +368,7 @@ function AnimalCreationForm({onClose}) {
             <div className="error-message">{dietError}</div>
           </div>
           <div className="form-group">
-            <label htmlFor="diet">Descrizione</label>
+            <label htmlFor="description">Curiosità</label>
             <input
               type="text"
               id="description"
