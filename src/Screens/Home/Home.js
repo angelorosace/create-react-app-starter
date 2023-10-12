@@ -16,7 +16,6 @@ function HomeScreen() {
     axios.get('https://anidexapi-production.up.railway.app/stats?table=animals&groupBy=category')
       .then((response) => {
         setStats(response.data.data);
-        console.log(response.data.data);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -38,7 +37,8 @@ function HomeScreen() {
         <div className="card-container">
           {categories.map((item) => (
             <Card 
-            key={item.id} 
+            key={item.id}
+            id={item.id} 
             label={item.name}
             count={stats[item.name] ? stats[item.name].count : 0}
             />

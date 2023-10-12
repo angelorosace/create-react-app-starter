@@ -262,3 +262,8 @@
   font-weight: bold; /* Bold text */
 }
 
+.spinner {
+  display: block;
+  margin: 0 auto;
+}
+

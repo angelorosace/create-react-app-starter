@@ -2,6 +2,7 @@ import React, { useState} from 'react';
 import './AnimalCreationForm.css'; // Import the CSS file
 import '@fortawesome/fontawesome-free/css/all.css';
 import Axios from 'axios';
+import { BarLoader } from 'react-spinners';
 
 function AnimalCreationForm({onClose}) {
   // Define state variables to store form input values
@@ -55,6 +56,8 @@ function AnimalCreationForm({onClose}) {
   const [isSuccessVisible, setSuccessVisible] = useState(false);
   const [isErrorVisible, setErrorVisible] = useState(false);
 
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
   // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -89,6 +92,8 @@ function AnimalCreationForm({onClose}) {
 
   // Handle form submission
   const handleSubmit = async (e) => {
+
+    setIsButtonDisabled(true);
 
     e.preventDefault();
     // Perform validation
@@ -177,6 +182,7 @@ function AnimalCreationForm({onClose}) {
 
     // If there are errors, prevent submission
     if (!isValid) {
+      setIsButtonDisabled(false);
       return;
     }
 
@@ -186,12 +192,14 @@ function AnimalCreationForm({onClose}) {
 
       setFormVisible(false);
       setSuccessVisible(true);
+      setIsButtonDisabled(false);
     } catch (error) {
       // Handle errors
       console.error('Error:', error);
 
       setFormVisible(false);
       setErrorVisible(true);
+      setIsButtonDisabled(false);
     }
 
     setTimeout(() => {
@@ -378,8 +386,15 @@ function AnimalCreationForm({onClose}) {
               onChange={handleInputChange}
             />
           </div>
-          <button type="submit">Aggiungi</button>
-          <button type="button" className="cancel-button" onClick={onClose}>Cancella</button>
+          {!isButtonDisabled && 
+          <button type="submit" disabled={isButtonDisabled}>Aggiungi</button>
+          }
+          {!isButtonDisabled && 
+          <button type="button" className="cancel-button" onClick={onClose} disabled={isButtonDisabled}>Chiudi</button>
+          }
+          {isButtonDisabled &&
+            <BarLoader color={'blue'} loading={isButtonDisabled} className="spinner" />
+          }
         </form>
       </div>
       )
