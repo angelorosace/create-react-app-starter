@@ -241,15 +241,15 @@ function AnimalCreationForm({onClose}) {
               onChange={handleInputChange}
             >
               <option value="0">-</option>
-              <option value="1">Mammiferi</option>
-              <option value="2">Uccelli</option>
-              <option value="3">Insetti</option>
-              <option value="4">Aracnidi</option>
-              <option value="5">Invertebrati</option>
-              <option value="6">Rettili</option>
-              <option value="7">Anfibi</option>
-              <option value="8">Pesci</option>
-              <option value="9">Altro</option>
+              <option value="Mammiferi">Mammiferi</option>
+              <option value="Uccelli">Uccelli</option>
+              <option value="Insetti">Insetti</option>
+              <option value="Aracnidi">Aracnidi</option>
+              <option value="Invertebrati">Invertebrati</option>
+              <option value="Rettili">Rettili</option>
+              <option value="Anfibi">Anfibi</option>
+              <option value="Pesci">Pesci</option>
+              <option value="Altro">Altro</option>
             </select>
             <div className="error-message">{categoryError}</div>
           </div>

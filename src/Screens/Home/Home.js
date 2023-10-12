@@ -8,12 +8,23 @@ import axios from 'axios';
 function HomeScreen() {
 
   const [categories, setCategories] = useState([]);
+  const [stats, setStats] = useState([]);
   
   useEffect(() => {
 
+    // get categories stats
+    axios.get('https://anidexapi-production.up.railway.app/stats?table=animals&groupBy=category')
+      .then((response) => {
+        setStats(response.data.data);
+        console.log(response.data.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+
+    // get categories
     axios.get('https://anidexapi-production.up.railway.app/categories')
       .then((response) => {
-        console.log(response);
         setCategories(response.data.categoryData);
       })
       .catch((error) => {
@@ -26,7 +37,11 @@ function HomeScreen() {
         <Searchbar/>
         <div className="card-container">
           {categories.map((item) => (
-            <Card key={item.id} label={item.name}/>
+            <Card 
+            key={item.id} 
+            label={item.name}
+            count={stats[item.name] ? stats[item.name].count : 0}
+            />
           ))}
         </div>
         <Footer/>
