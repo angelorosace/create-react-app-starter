@@ -13,8 +13,8 @@ function Category() {
             navigate("/not-found")
         }
         //get all animals in category
-        
-    },[])
+
+    },[expectedCategories, name, navigate])
 
     return (
         <div>
