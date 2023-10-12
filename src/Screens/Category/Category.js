@@ -1,4 +1,4 @@
-import React,{ useEffect }from 'react';
+import React,{ useEffect, useMemo }from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,7 +6,11 @@ import { useNavigate } from 'react-router-dom';
 function Category() {
     const navigate = useNavigate();
     const { name } = useParams(); 
-    const expectedCategories = ["Mammiferi","Uccelli","Insetti","Aracnidi","Invertebrati","Rettili","Anfibi","Pesci","Altro"]
+
+    const expectedCategories = useMemo(() => {
+        return ["Mammiferi","Uccelli","Insetti","Aracnidi","Invertebrati","Rettili","Anfibi","Pesci","Altro"]
+        ;
+      }, []);
 
     useEffect(()=>{
         if (!expectedCategories.includes(name)){
