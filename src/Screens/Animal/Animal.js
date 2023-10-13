@@ -1,10 +1,10 @@
-import react from "react";
+//import react from "react";
 import { useParams } from 'react-router-dom';
-import { useNavigation } from '../../ContextProvider/NavigationContext';
+//import { useNavigation } from '../../ContextProvider/NavigationContext';
 
 
 function Animal() {
-    const navigate = useNavigation();
+    //const navigate = useNavigation();
     const { cat,id } = useParams();
 
     return(
