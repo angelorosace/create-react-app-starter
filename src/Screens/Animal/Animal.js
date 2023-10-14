@@ -73,7 +73,7 @@ function Animal() {
                     }
                     </div>
                 </div>
-                {imageSrc && 
+                {imageSrc && imageSrc.length > 1 && 
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <button className="butt prev" onClick={goToPrevious}>&#8249;</button>
                         <button className="butt next" onClick={goToNext}>&#8250;</button>
