@@ -30,7 +30,9 @@ function Category() {
 
     return (
         <div>
-        <h2>Category {name}</h2>
+        <div className="divs-container-vertical">
+          <div className="name">{name}</div>
+        </div>
         <div className="card-container">
           {animalsPerCategory.map((item) => (
             <Card 

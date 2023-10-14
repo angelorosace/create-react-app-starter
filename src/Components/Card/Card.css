@@ -1,5 +1,4 @@
 .card {
-    width: calc(50% - 20px); /* Two columns with some spacing between */
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -12,7 +11,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    background-color: #333;
+    background-color: #007bff;
     color: white;
     padding: 5px 10px;
     border-top-left-radius: 10px;
@@ -29,7 +28,7 @@
     align-items: center;
     justify-content: center;
     height: 100%; /* Set the height to fill the card vertically */
-    font-size: 24px; /* Customize the spinner size */
+    font-size: 12px; /* Customize the spinner size */
     color: #007bff; /* Customize the spinner color */
     animation: spin 1s linear infinite;
   }

@@ -84,11 +84,11 @@ function Animal() {
                         <div className="title">Categoria</div>
                         <div className="info">{animal.category}</div>
                         <div className="title">IUCN</div>
-                        <div className="info">
+                        <div className="icon-scroll-container-horizontal">
                             {iucns.map((icon) => (
                                 <div
                                     id={icon}
-                                    className={`icon ${icon}`}
+                                    className={`icon ${icon} icon-h`}
                                 >
                                     {icon}
                                 </div>
