@@ -39,7 +39,7 @@
     padding: 10px;
     color:white;
     border: 1px solid #007bff;
-    border-radius: 5px;
+    border-radius: 0px 0px 5px 5px;
     text-align: center;
   }
 
@@ -55,11 +55,16 @@
   }
 
   .butt {
+    background-color: #007AFF; /* Apple's blue color */
+    color: white;
+    border: 2px solid #007AFF;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 5px;
     margin: 5px;
     margin-bottom: 15px;
-    background-color: #007bff;
-    border-radius: 5px;
-    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
   }
 
   .slideshow {
@@ -69,7 +74,7 @@
   
   .slideshow-container {
     width: 300px; /* Adjust to your preferred width */
-    height: 200px; /* Adjust to your preferred height */
+    height: 300px; /* Adjust to your preferred height */
     overflow: hidden;
     position: relative;
   }
@@ -77,6 +82,6 @@
   .slideshow-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
   

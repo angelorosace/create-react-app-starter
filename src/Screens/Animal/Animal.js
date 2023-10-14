@@ -3,13 +3,16 @@ import {useEffect, useState} from "react";
 import { useParams } from 'react-router-dom';
 import "./Animal.css";
 import '@fortawesome/fontawesome-free/css/all.css';
+//import { useNavigation } from '../../ContextProvider/NavigationContext';
 
 
 function Animal() {
+    //const navigate = useNavigation();
     const { id } = useParams();
     const [animal,setAnimal] = useState({});
     const [imageSrc, setImageSrc] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [iucns, setIucns] = useState([]);
 
     const goToPrevious = () => {
         setCurrentIndex((prevIndex) => (prevIndex - 1 + imageSrc.length) % imageSrc.length);
@@ -26,23 +29,24 @@ function Animal() {
             try{
                 var response = await Axios.get('https://anidexapi-production.up.railway.app/animals?id='+id)
                 setAnimal(response.data.data)
-
-                var photosList = response.data.data.photo.split(",")
-                photosList.forEach(async (photo) => {
-                    try {
-                        console.log("ccc")
-                        var resp = await Axios.get("https://anidexapi-production.up.railway.app/images?photo="+photo,{
-                        responseType: 'blob',
-                        })
-                        const objectURL = URL.createObjectURL(resp.data);
-                        setImageSrc((imageSrc) => [...imageSrc, objectURL]);
-                    } catch (error){
-                        console.error('fetch images error', error)
-                    }
-                });
             } catch (error){
-                console.error("fetch animal error",error)
+                console.error(error)
             }
+
+            setIucns(response.data.data.iucn.split(","))
+
+            var photosList = response.data.data.photo.split(",")
+            photosList.forEach(async (photo) => {
+                try {
+                    var resp = await Axios.get("https://anidexapi-production.up.railway.app/images?photo="+photo,{
+                      responseType: 'blob',
+                    })
+                    const objectURL = URL.createObjectURL(resp.data);
+                    setImageSrc((imageSrc) => [...imageSrc, objectURL]);
+                } catch (error){
+                    console.error('Error:', error)
+                }
+            });
 
         }
         fetchAnimalInfo()
@@ -80,18 +84,17 @@ function Animal() {
                         <div className="title">Categoria</div>
                         <div className="info">{animal.category}</div>
                         <div className="title">IUCN</div>
-                        <div className="icon-scroll-container">
-                            <div className="icons">
-                                {animal.iucn.split(",").map((icon) => (
-                                    <div
-                                        key={icon.id}
-                                        className={`icon ${icon}`}
-                                    >
-                                        {icon}
-                                    </div>
-                                ))}
-                            </div>
+                        <div className="info">
+                            {iucns.map((icon) => (
+                                <div
+                                    id={icon}
+                                    className={`icon ${icon}`}
+                                >
+                                    {icon}
+                                </div>
+                            ))}
                         </div>
+                        
                         <div className="title">Tassonomia</div>
                         <div className="info">{animal.taxonomy}</div>
                         <div className="title">Etimologia</div>
