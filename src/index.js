@@ -7,6 +7,7 @@ import Category from './Screens/Category/Category';
 import Animal from './Screens/Animal/Animal';
 import NotFound from './Screens/NotFound/NotFound';
 import { NavigationProvider } from './ContextProvider/NavigationContext';
+import HomeScreen from './Screens/Home/Home';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,6 +15,7 @@ root.render(
       <NavigationProvider>
         <Routes>
           <Route exact path="/" element={<App/>} />
+          <Route exact path="/home" element={<HomeScreen/>} />
           <Route path="/category/:name" element={<Category/>} />
           <Route path="/category/:cat/animal/:id" element={<Animal />} />
           <Route path="*" element={<NotFound />} />

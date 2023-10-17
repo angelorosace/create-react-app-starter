@@ -4,17 +4,25 @@ import Searchbar from '../../Components/Searchbar/Searchbar';
 import Footer from '../../Components/Footer/Footer';
 import Card from '../../Components/Card/Card';
 import axios from 'axios';
+import { useNavigation } from '../../ContextProvider/NavigationContext';
 
 function HomeScreen() {
 
+  const navigate = useNavigation();
   const [categories, setCategories] = useState([]);
   const [stats, setStats] = useState([]);
+  const token = localStorage.getItem("authToken");
   
   useEffect(() => {
 
     // get categories stats
-    axios.get('https://anidexapi-production.up.railway.app/stats?table=animals&groupBy=category')
+    axios.get('https://anidexapi-production.up.railway.app/stats?table=animals&groupBy=category',{
+      Authorization: `${token}`
+    })
       .then((response) => {
+        if (response.error === "Token is expired") {
+          navigate("/")
+        }
         setStats(response.data.data);
       })
       .catch((error) => {
@@ -22,14 +30,19 @@ function HomeScreen() {
       });
 
     // get categories
-    axios.get('https://anidexapi-production.up.railway.app/categories')
+    axios.get('https://anidexapi-production.up.railway.app/categories',{
+      Authorization: `${token}`
+    })
       .then((response) => {
+        if (response.error === "Token is expired") {
+          navigate("/")
+        }
         setCategories(response.data.categoryData);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
-  }, []);
+  }, [token,navigate]);
 
   return (
     <div className="home-screen">

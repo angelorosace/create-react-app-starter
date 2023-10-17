@@ -8,6 +8,7 @@ function Card({ id, label, content, count, photos }) {
   const navigate = useNavigation();
 
   const [imageSrc, setImageSrc] = useState('');
+  const token = localStorage.getItem("authToken");
 
   useEffect(() => {
     async function setup(){
@@ -18,7 +19,13 @@ function Card({ id, label, content, count, photos }) {
         try {
           var response = await Axios.get("https://anidexapi-production.up.railway.app/images?photo="+photosList[0],{
             responseType: 'blob',
+            Authorization: `${token}`
           })
+
+          if (response.error === "Token is expired") {
+            navigate("/")
+          }
+
           const objectURL = URL.createObjectURL(response.data);
           setImageSrc(objectURL);
         } catch (error){
@@ -27,7 +34,7 @@ function Card({ id, label, content, count, photos }) {
       }
     }
     setup()
-  }, [photos]);
+  }, [photos,navigate,token]);
 
   const handleCategoryClick = () => {
     navigate(`/category/${label}`);

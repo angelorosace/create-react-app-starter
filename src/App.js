@@ -1,10 +1,10 @@
 import './App.css';
-import HomeScreen from './Screens/Home/Home';
+import Login from './Screens/Login/Login';
 
 function App() {
   return (
     <div className="App">
-      <HomeScreen/>
+      <Login />
     </div>
   );
 }

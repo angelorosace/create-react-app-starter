@@ -9,6 +9,7 @@ function Category() {
     const navigate = useNavigation();
     const { name } = useParams(); 
     const [animalsPerCategory, setanimalsPerCategory] = useState([]);
+    const token = localStorage.getItem("authToken");
 
     useEffect(()=>{
       async function fetchAnimals() {
@@ -18,7 +19,14 @@ function Category() {
   
         //get all animals in category
         try {
-            var response = await Axios.get('https://anidexapi-production.up.railway.app/animals?category='+name+'&page=1');
+            var response = await Axios.get('https://anidexapi-production.up.railway.app/animals?category='+name+'&page=1',{
+              Authorization: `${token}`
+            });
+
+            if (response.error === "Token is expired") {
+              navigate("/")
+            }
+
             setanimalsPerCategory(response.data.data)
           } catch (error) {
             // Handle errors
@@ -26,7 +34,7 @@ function Category() {
           }
       }
       fetchAnimals()
-    },[name,navigate])
+    },[name,navigate,token])
 
     return (
         <div>

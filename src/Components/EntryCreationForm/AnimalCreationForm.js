@@ -3,9 +3,12 @@ import './AnimalCreationForm.css'; // Import the CSS file
 import '@fortawesome/fontawesome-free/css/all.css';
 import Axios from 'axios';
 import { BarLoader } from 'react-spinners';
+import { useNavigation } from '../../ContextProvider/NavigationContext';
 
 function AnimalCreationForm({onClose}) {
   // Define state variables to store form input values
+  const navigate = useNavigation();
+  const token = localStorage.getItem("authToken");
   const [formData, setFormData] = useState({
     photo: [],
     category:'',
@@ -24,6 +27,7 @@ function AnimalCreationForm({onClose}) {
 
   const headers = {
     'Content-Type': 'multipart/form-data',
+    'Authorization':`${token}`
   };
 
   // Array of available icons
@@ -188,9 +192,12 @@ function AnimalCreationForm({onClose}) {
 
     try {
       var response = await Axios.post('https://anidexapi-production.up.railway.app/animal', formData, {headers});
-      console.log(response.data.message)
-
+      
       setFormVisible(false);
+      if (response.error === "Token is expired") {
+        navigate("/")
+      }
+
       setSuccessVisible(true);
       setIsButtonDisabled(false);
     } catch (error) {

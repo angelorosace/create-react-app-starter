@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import { useParams } from 'react-router-dom';
 import "./Animal.css";
 import '@fortawesome/fontawesome-free/css/all.css';
-//import { useNavigation } from '../../ContextProvider/NavigationContext';
+import { useNavigation } from '../../ContextProvider/NavigationContext';
 
 
 function Animal() {
@@ -13,6 +13,8 @@ function Animal() {
     const [imageSrc, setImageSrc] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [iucns, setIucns] = useState([]);
+    const token = localStorage.getItem("authToken");
+    const navigate = useNavigation();
 
     const goToPrevious = () => {
         setCurrentIndex((prevIndex) => (prevIndex - 1 + imageSrc.length) % imageSrc.length);
@@ -27,7 +29,12 @@ function Animal() {
     useEffect(()=>{
         async function fetchAnimalInfo() {
             try{
-                var response = await Axios.get('https://anidexapi-production.up.railway.app/animals?id='+id)
+                var response = await Axios.get('https://anidexapi-production.up.railway.app/animals?id='+id,{
+                    Authorization: `${token}`
+                })
+                if (response.error === "Token is expired") {
+                    navigate("/")
+                }
                 setAnimal(response.data.data)
             } catch (error){
                 console.error(error)
@@ -40,7 +47,11 @@ function Animal() {
                 try {
                     var resp = await Axios.get("https://anidexapi-production.up.railway.app/images?photo="+photo,{
                       responseType: 'blob',
+                      Authorization: `${token}`
                     })
+                    if (response.error === "Token is expired") {
+                        navigate("/")
+                    }
                     const objectURL = URL.createObjectURL(resp.data);
                     setImageSrc((imageSrc) => [...imageSrc, objectURL]);
                 } catch (error){
@@ -50,7 +61,7 @@ function Animal() {
 
         }
         fetchAnimalInfo()
-    },[id])
+    },[id,token,navigate])
 
     return(
         <div>
