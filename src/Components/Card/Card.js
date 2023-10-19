@@ -19,8 +19,11 @@ function Card({ id, label, content, count, photos }) {
         try {
           var response = await Axios.get("https://anidexapi-production.up.railway.app/images?photo="+photosList[0],{
             responseType: 'blob',
-            Authorization: `${token}`
-          })
+              headers: {
+                'Authorization': `${token}`
+              }
+            }
+          )
 
           if (response.error === "Token is expired") {
             navigate("/")

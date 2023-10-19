@@ -30,8 +30,10 @@ function Animal() {
         async function fetchAnimalInfo() {
             try{
                 var response = await Axios.get('https://anidexapi-production.up.railway.app/animals?id='+id,{
-                    Authorization: `${token}`
-                })
+                    headers: {
+                      'Authorization': `${token}`
+                    }
+                  })
                 if (response.error === "Token is expired") {
                     navigate("/")
                 }
@@ -47,8 +49,11 @@ function Animal() {
                 try {
                     var resp = await Axios.get("https://anidexapi-production.up.railway.app/images?photo="+photo,{
                       responseType: 'blob',
-                      Authorization: `${token}`
-                    })
+                        headers: {
+                          'Authorization': `${token}`
+                        }
+                      }
+                    )
                     if (response.error === "Token is expired") {
                         navigate("/")
                     }

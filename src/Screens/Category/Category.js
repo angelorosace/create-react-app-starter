@@ -20,7 +20,9 @@ function Category() {
         //get all animals in category
         try {
             var response = await Axios.get('https://anidexapi-production.up.railway.app/animals?category='+name+'&page=1',{
-              Authorization: `${token}`
+              headers: {
+                'Authorization': `${token}`
+              }
             });
 
             if (response.error === "Token is expired") {
