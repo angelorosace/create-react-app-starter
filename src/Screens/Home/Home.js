@@ -14,10 +14,12 @@ function HomeScreen() {
   const token = localStorage.getItem("authToken");
   
   useEffect(() => {
-
+    console.log(token)
     // get categories stats
     axios.get('https://anidexapi-production.up.railway.app/stats?table=animals&groupBy=category',{
-      Authorization: `${token}`
+      headers: {
+        'Authorization': `${token}`
+      }
     })
       .then((response) => {
         if (response.error === "Token is expired") {
@@ -31,7 +33,9 @@ function HomeScreen() {
 
     // get categories
     axios.get('https://anidexapi-production.up.railway.app/categories',{
-      Authorization: `${token}`
+      headers: {
+        'Authorization': `${token}`
+      }
     })
       .then((response) => {
         if (response.error === "Token is expired") {
