@@ -18,12 +18,10 @@ function Animal() {
 
     const goToPrevious = () => {
         setCurrentIndex((prevIndex) => (prevIndex - 1 + imageSrc.length) % imageSrc.length);
-        console.log(currentIndex)
     };
     
     const goToNext = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % imageSrc.length);
-        console.log(currentIndex)
     };
 
     useEffect(()=>{

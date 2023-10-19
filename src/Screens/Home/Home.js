@@ -14,7 +14,6 @@ function HomeScreen() {
   const token = localStorage.getItem("authToken");
   
   useEffect(() => {
-    console.log(token)
     // get categories stats
     axios.get('https://anidexapi-production.up.railway.app/stats?table=animals&groupBy=category',{
       headers: {
