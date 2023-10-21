@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './Home.css'; // You can create a CSS file for styling
-import Searchbar from '../../Components/Searchbar/Searchbar';
 import Footer from '../../Components/Footer/Footer';
 import Card from '../../Components/Card/Card';
 import axios from 'axios';
@@ -14,6 +13,9 @@ function HomeScreen() {
   const token = localStorage.getItem("authToken");
   
   useEffect(() => {
+    if (!token) {
+      navigate("/")
+    }
     // get categories stats
     axios.get('https://anidexapi-production.up.railway.app/stats?table=animals&groupBy=category',{
       headers: {
@@ -22,6 +24,7 @@ function HomeScreen() {
     })
       .then((response) => {
         if (response.error === "Token is expired") {
+          localStorage.clear()
           navigate("/")
         }
         setStats(response.data.data);
@@ -38,6 +41,7 @@ function HomeScreen() {
     })
       .then((response) => {
         if (response.error === "Token is expired") {
+          localStorage.clear()
           navigate("/")
         }
         setCategories(response.data.categoryData);
@@ -49,9 +53,11 @@ function HomeScreen() {
 
   return (
     <div className="home-screen">
-        <Searchbar/>
+        <div className='HomeTitle'>
+          <h1>Anidex</h1>
+        </div>
         <div className="card-container">
-          {categories.map((item) => (
+          {categories && categories.map((item) => (
             <Card 
             key={item.id}
             id={item.id} 

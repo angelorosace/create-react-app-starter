@@ -12,6 +12,9 @@ function Category() {
     const token = localStorage.getItem("authToken");
 
     useEffect(()=>{
+      if (!token) {
+        navigate("/")
+      }
       async function fetchAnimals() {
         if (!["Mammiferi","Uccelli","Insetti","Aracnidi","Invertebrati","Rettili","Anfibi","Pesci","Altro"].includes(name)){
           navigate("/not-found")
@@ -26,6 +29,7 @@ function Category() {
             });
 
             if (response.error === "Token is expired") {
+              localStorage.clear()
               navigate("/")
             }
 
@@ -44,7 +48,7 @@ function Category() {
           <div className="name">{name}</div>
         </div>
         <div className="card-container">
-          {animalsPerCategory.map((item) => (
+          {animalsPerCategory && animalsPerCategory.map((item) => (
             <Card 
             key={item.id}
             id={item.id} 

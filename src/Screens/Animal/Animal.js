@@ -13,6 +13,8 @@ function Animal() {
     const [imageSrc, setImageSrc] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [iucns, setIucns] = useState([]);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+    const [animalPhotoList,setPhotoList] = useState("");
     const token = localStorage.getItem("authToken");
     const navigate = useNavigation();
 
@@ -24,7 +26,33 @@ function Animal() {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % imageSrc.length);
     };
 
+    const headers = {
+        'Authorization':`${token}`
+      };
+
+    const onDelete = async () => {
+        setIsButtonDisabled(true);
+        try {
+            var response = await Axios.delete('https://anidexapi-production.up.railway.app/animal?id='+id+'&photos='+animalPhotoList, {headers});
+            
+            if (response.error === "Token is expired") {
+                localStorage.clear()
+                navigate("/")
+            }
+
+            navigate("/Home")
+            setIsButtonDisabled(false); 
+        } catch (error) {
+            // Handle errors
+            console.error('Error:', error);
+            setIsButtonDisabled(false);
+        }
+      };
+
     useEffect(()=>{
+        if (!token) {
+            navigate("/")
+        }
         async function fetchAnimalInfo() {
             try{
                 var response = await Axios.get('https://anidexapi-production.up.railway.app/animals?id='+id,{
@@ -33,6 +61,7 @@ function Animal() {
                     }
                   })
                 if (response.error === "Token is expired") {
+                    localStorage.clear()
                     navigate("/")
                 }
                 setAnimal(response.data.data)
@@ -43,6 +72,7 @@ function Animal() {
             setIucns(response.data.data.iucn.split(","))
 
             var photosList = response.data.data.photo.split(",")
+            setPhotoList(photosList)
             photosList.forEach(async (photo) => {
                 try {
                     var resp = await Axios.get("https://anidexapi-production.up.railway.app/images?photo="+photo,{
@@ -53,6 +83,7 @@ function Animal() {
                       }
                     )
                     if (response.error === "Token is expired") {
+                        localStorage.clear()
                         navigate("/")
                     }
                     const objectURL = URL.createObjectURL(resp.data);
@@ -127,6 +158,9 @@ function Animal() {
                         <div className="info">{animal.description}</div>
                     </div>
                 </div>
+                {!isButtonDisabled && 
+                    <button type="button" className="cancel-button" onClick={onDelete} disabled={isButtonDisabled}>Elimina</button>
+                }
             </div>
             }
         </div>

@@ -195,11 +195,12 @@ function AnimalCreationForm({onClose}) {
       
       setFormVisible(false);
       if (response.error === "Token is expired") {
+        localStorage.clear()
         navigate("/")
       }
-
       setSuccessVisible(true);
       setIsButtonDisabled(false);
+      navigate(0)
     } catch (error) {
       // Handle errors
       console.error('Error:', error);
@@ -211,7 +212,7 @@ function AnimalCreationForm({onClose}) {
 
     setTimeout(() => {
       onClose();
-    }, 3000);
+    }, 2500);
   };
 
   return (

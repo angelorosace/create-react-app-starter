@@ -11,6 +11,9 @@ function Card({ id, label, content, count, photos }) {
   const token = localStorage.getItem("authToken");
 
   useEffect(() => {
+    if (!token) {
+      navigate("/")
+    }
     async function setup(){
       if (photos) {
 
@@ -26,6 +29,7 @@ function Card({ id, label, content, count, photos }) {
           )
 
           if (response.error === "Token is expired") {
+            localStorage.clear()
             navigate("/")
           }
 

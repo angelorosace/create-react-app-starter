@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Axios from "axios";
 import { useNavigation } from '../../ContextProvider/NavigationContext';
+import './Login.css'; // Import the CSS file
 
 function Login() {
     const [userName, setUserName] = useState('');
@@ -32,6 +33,10 @@ function Login() {
     },[navigate,token])
 
     return (
+        <div>
+            <div className='HomeTitle'>
+          <h1>Anidex</h1>
+        </div>
         <div className="login-container">
         <h2>Login</h2>
         <form>
@@ -53,6 +58,7 @@ function Login() {
             Log In
             </button>
         </form>
+        </div>
         </div>
     );
 }
