@@ -194,9 +194,10 @@ function AnimalCreationForm({onClose}) {
       var response = await Axios.post('https://anidexapi-production.up.railway.app/animal', formData, {headers});
       
       setFormVisible(false);
-      if (response.error === "Token is expired") {
+      if (response.data.error === "Token is expired") {
         localStorage.clear()
         navigate("/")
+        return
       }
       setSuccessVisible(true);
       setIsButtonDisabled(false);

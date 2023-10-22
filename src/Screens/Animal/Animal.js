@@ -35,9 +35,10 @@ function Animal() {
         try {
             var response = await Axios.delete('https://anidexapi-production.up.railway.app/animal?id='+id+'&photos='+animalPhotoList, {headers});
             
-            if (response.error === "Token is expired") {
+            if (response.data.error === "Token is expired") {
                 localStorage.clear()
                 navigate("/")
+                return
             }
 
             navigate("/Home")
@@ -60,11 +61,15 @@ function Animal() {
                       'Authorization': `${token}`
                     }
                   })
-                if (response.error === "Token is expired") {
+                if (response.data.error === "Token is expired") {
                     localStorage.clear()
                     navigate("/")
+                    return
                 }
                 setAnimal(response.data.data)
+
+
+
             } catch (error){
                 console.error(error)
             }
@@ -82,9 +87,10 @@ function Animal() {
                         }
                       }
                     )
-                    if (response.error === "Token is expired") {
+                    if (response.data.error === "Token is expired") {
                         localStorage.clear()
                         navigate("/")
+                        return
                     }
                     const objectURL = URL.createObjectURL(resp.data);
                     setImageSrc((imageSrc) => [...imageSrc, objectURL]);

@@ -28,10 +28,11 @@ function Card({ id, label, content, count, photos }) {
             }
           )
 
-          if (response.error === "Token is expired") {
+          if (response.data.error === "Token is expired") {
             localStorage.clear()
             navigate("/")
-          }
+            return
+        }
 
           const objectURL = URL.createObjectURL(response.data);
           setImageSrc(objectURL);

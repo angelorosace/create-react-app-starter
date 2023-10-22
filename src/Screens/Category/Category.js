@@ -28,10 +28,11 @@ function Category() {
               }
             });
 
-            if (response.error === "Token is expired") {
+            if (response.data.error === "Token is expired") {
               localStorage.clear()
               navigate("/")
-            }
+              return
+          }
 
             setanimalsPerCategory(response.data.data)
           } catch (error) {

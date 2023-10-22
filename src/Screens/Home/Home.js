@@ -23,9 +23,10 @@ function HomeScreen() {
       }
     })
       .then((response) => {
-        if (response.error === "Token is expired") {
+        if (response.data.error === "Token is expired") {
           localStorage.clear()
           navigate("/")
+          return
         }
         setStats(response.data.data);
       })
@@ -40,10 +41,11 @@ function HomeScreen() {
       }
     })
       .then((response) => {
-        if (response.error === "Token is expired") {
+        if (response.data.error === "Token is expired") {
           localStorage.clear()
           navigate("/")
-        }
+          return
+      }
         setCategories(response.data.categoryData);
       })
       .catch((error) => {
