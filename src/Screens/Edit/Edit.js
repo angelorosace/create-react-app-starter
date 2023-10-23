@@ -1,13 +1,13 @@
 import { useLocation } from "react-router-dom";
-import React, { useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import { BarLoader } from 'react-spinners';
 import './Edit.css';
-import { useNavigation } from '../../ContextProvider/NavigationContext';
+//import { useNavigation } from '../../ContextProvider/NavigationContext';
 
 function Edit() {
     const { state } = useLocation()
     const payload = state && state.payload
-    const token = localStorage.getItem("authToken")
+    //const token = localStorage.getItem("authToken")
     const [formData, setFormData] = useState({
         photo: '',
         category:'',
@@ -28,12 +28,12 @@ function Edit() {
       const [isSuccessVisible, setSuccessVisible] = useState(false);
       const [isErrorVisible, setErrorVisible] = useState(false);
     
-    const headers = {
+    /*const headers = {
       'Content-Type': 'application/json',
       'Authorization':`${token}`
-    };
+    };*/
 
-    const navigate = useNavigation();
+    //const navigate = useNavigation();
     const [dataChanged,setDataChanged] = useState(false);
     
     const [categoryError, setCategoryError] = useState('');
@@ -47,22 +47,6 @@ function Edit() {
     const [dsError, setDSError] = useState('');
     const [dietError, setDietError] = useState('');
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-
-    useEffect(()=>{
-        formData.photo = payload.photo
-        formData.category = payload.category
-        formData.name = payload.name
-        formData.taxonomy = payload.taxonomy
-        formData.etymology = payload.etymology
-        formData.iucn = payload.iucn
-        formData.geo = payload.geo
-        formData.migration = payload.migration
-        formData.habitat = payload.habitat
-        formData.dimensions = payload.dimensions
-        formData.ds = payload.ds
-        formData.diet = payload.diet
-        formData.description = payload.description
-    },[])
 
     const handleSubmit = async (e) => {
         if (!dataChanged) {
@@ -150,6 +134,12 @@ function Edit() {
         setIsButtonDisabled(false);
         return;
       }
+
+      setSuccessVisible(true);
+      setSuccessVisible(false);
+      setErrorVisible(true);
+
+      setErrorVisible(false);
 
       /*try {
         var response = await Axios.put('https://anidexapi-production.up.railway.app/animal', formData, {headers});
