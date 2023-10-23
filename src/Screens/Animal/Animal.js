@@ -17,6 +17,8 @@ function Animal() {
     const [animalPhotoList,setPhotoList] = useState("");
     const token = localStorage.getItem("authToken");
     const navigate = useNavigation();
+    const [isSuccessVisible, setSuccessVisible] = useState(false);
+  const [isErrorVisible, setErrorVisible] = useState(false);
 
     const goToPrevious = () => {
         setCurrentIndex((prevIndex) => (prevIndex - 1 + imageSrc.length) % imageSrc.length);
@@ -40,15 +42,26 @@ function Animal() {
                 navigate("/")
                 return
             }
-
-            navigate("/Home")
+            setSuccessVisible(true)
+            setTimeout(() => {
+                setSuccessVisible(false);
+                navigate("/Home")
+            }, 2000);
             setIsButtonDisabled(false); 
         } catch (error) {
             // Handle errors
             console.error('Error:', error);
             setIsButtonDisabled(false);
+            setErrorVisible(true)
+            setTimeout(() => {
+                setErrorVisible(false);
+              }, 2000);
         }
       };
+
+    const onModify = () => {
+        navigate(`/Edit`,{ state: { payload: animal } })
+    }
 
     useEffect(()=>{
         if (!token) {
@@ -105,7 +118,7 @@ function Animal() {
 
     return(
         <div>
-            {animal &&
+            {animal && !isSuccessVisible && !isErrorVisible &&
             <div>
                 <div className="divs-container-vertical">
                         <div className="name">{animal.name}</div>
@@ -139,6 +152,7 @@ function Animal() {
                             {iucns.map((icon) => (
                                 <div
                                     id={icon}
+                                    key={icon}
                                     className={`icon ${icon} icon-h`}
                                 >
                                     {icon}
@@ -164,11 +178,26 @@ function Animal() {
                         <div className="info">{animal.description}</div>
                     </div>
                 </div>
-                {!isButtonDisabled && 
-                    <button type="button" className="cancel-button" onClick={onDelete} disabled={isButtonDisabled}>Elimina</button>
-                }
+                <div className="button-container">
+                    <button type="button" className="delete-button" onClick={onDelete} disabled={isButtonDisabled}>Elimina</button>
+                    <button type="button" className="modify-button" onClick={onModify} >Modifica</button>
+                </div>
             </div>
             }
+            <div className="message-container">
+            {isSuccessVisible && (
+                <div className="success-message">
+                <i className="fas fa-check-circle fa-5x"></i>
+                <p className="success-text">Specie animale eliminata!</p>
+                </div>
+            )}
+            {isErrorVisible && (
+                <div className="error-feedback">
+                <i className="fas fa-exclamation-circle fa-5x"></i>
+                <p className="error-text">Qualcosa e' andato storto!</p>
+                </div>
+            )}
+            </div>
         </div>
     )
 }

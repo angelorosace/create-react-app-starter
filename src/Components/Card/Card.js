@@ -65,7 +65,7 @@ function Card({ id, label, content, count, photos }) {
         backgroundSize:"cover"
         }}
         onClick={handleAnimalClick}>
-        <div className="label">{label}</div>
+        <div className="label-photo">{label}</div>
         <div className="content">{content}</div>
         <span>{count}</span>
       </div>
@@ -75,16 +75,16 @@ function Card({ id, label, content, count, photos }) {
         <div className="loading-spinner">
           <i className="fas fa-spinner"></i>
         </div>
-        <div className="label">{label}</div>
+        <div className="label-photo">{label}</div>
         <div className="content">{content}</div>
         <span>{count}</span>
       </div>
     }
     {!imageSrc && !photos &&
-      <div className="card" onClick={handleCategoryClick}>
+      <div className="card card-category" onClick={handleCategoryClick}>
         <div className="label">{label}</div>
         <div className="content">{content}</div>
-        <span>{count}</span>
+        <span className='count'>{count}</span>
       </div>
     }
     </>

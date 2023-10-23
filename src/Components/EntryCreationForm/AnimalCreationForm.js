@@ -201,7 +201,6 @@ function AnimalCreationForm({onClose}) {
       }
       setSuccessVisible(true);
       setIsButtonDisabled(false);
-      navigate(0)
     } catch (error) {
       // Handle errors
       console.error('Error:', error);
@@ -213,7 +212,8 @@ function AnimalCreationForm({onClose}) {
 
     setTimeout(() => {
       onClose();
-    }, 2500);
+      navigate(0)
+    }, 2000);
   };
 
   return (
@@ -395,6 +395,7 @@ function AnimalCreationForm({onClose}) {
               onChange={handleInputChange}
             />
           </div>
+          <div className="update-buttons">
           {!isButtonDisabled && 
           <button type="submit" disabled={isButtonDisabled}>Aggiungi</button>
           }
@@ -404,22 +405,28 @@ function AnimalCreationForm({onClose}) {
           {isButtonDisabled &&
             <BarLoader color={'blue'} loading={isButtonDisabled} className="spinner" />
           }
+          </div>
         </form>
       </div>
       )
     };
-    {isSuccessVisible && (
+    
+    {isSuccessVisible && 
+      <div className='creation-messages'>
         <div className="success-message">
           <i className="fas fa-check-circle fa-5x"></i>
-          <p className="success-text">Nuova specie animale correttamente aggiunta all'Anidex!</p>
+          <p className="success-text">Specie animale aggiunta all'Anidex!</p>
         </div>
-    )};
-    {isErrorVisible && (
+        </div>
+    };
+    {isErrorVisible && 
+      <div className='creation-messages'>
       <div className="error-feedback">
         <i className="fas fa-exclamation-circle fa-5x"></i>
         <p className="error-text">Qualcosa e' andato storto!</p>
       </div>
-    )};
+      </div>
+    };
     </div>
     
   );

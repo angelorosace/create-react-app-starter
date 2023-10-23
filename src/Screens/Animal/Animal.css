@@ -1,6 +1,6 @@
 .picture-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   padding: 20px;
   border-radius: 5px;
 }
@@ -9,8 +9,6 @@
     display: flex;
     justify-content: space-between;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
   }
   
   .image-container {
@@ -59,6 +57,7 @@
     color: white;
     border: 2px solid #007AFF;
     font-weight: bold;
+    font-size: 20px;
     border-radius: 5px;
     padding: 5px;
     margin: 5px;
@@ -76,7 +75,6 @@
     width: 300px; /* Adjust to your preferred width */
     height: 300px; /* Adjust to your preferred height */
     overflow: hidden;
-    position: relative;
   }
   
   .slideshow-image {
@@ -96,5 +94,34 @@
   .icon-h {
     margin-right: 5px;
     margin-left: 5px;
+  }
+
+  .delete-button {
+    background-color: #007AFF; /* Apple's blue color */
+    color: white;
+    font-weight: bold;
+    border: 2px solid #007AFF;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .modify-button {
+    background-color: white; /* Apple's blue color */
+    color: #007AFF;
+    font-weight: bold;
+    border: 2px solid #007AFF;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
   }
   
