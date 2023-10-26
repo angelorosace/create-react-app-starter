@@ -2,19 +2,19 @@ import { useLocation } from "react-router-dom";
 import React, { useState} from 'react';
 import { BarLoader } from 'react-spinners';
 import './Edit.css';
-//import { useNavigation } from '../../ContextProvider/NavigationContext';
+import { useNavigation } from '../../ContextProvider/NavigationContext';
+import Axios from "axios";
 
 function Edit() {
     const { state } = useLocation()
     const payload = state && state.payload
-    //const token = localStorage.getItem("authToken")
+    const token = localStorage.getItem("authToken")
     const [formData, setFormData] = useState({
-        photo: '',
+        id:'',
         category:'',
         name: '',
         taxonomy: '',
         etymology: '',
-        iucn: '',
         geo: '',
         migration: '',
         habitat: '',
@@ -23,17 +23,13 @@ function Edit() {
         diet: '',
         description: '',
       });
-
-
-      const [isSuccessVisible, setSuccessVisible] = useState(false);
-      const [isErrorVisible, setErrorVisible] = useState(false);
     
-    /*const headers = {
+    const headers = {
       'Content-Type': 'application/json',
       'Authorization':`${token}`
-    };*/
+    };
 
-    //const navigate = useNavigation();
+    const navigate = useNavigation();
     const [dataChanged,setDataChanged] = useState(false);
     
     const [categoryError, setCategoryError] = useState('');
@@ -48,10 +44,29 @@ function Edit() {
     const [dietError, setDietError] = useState('');
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
+    const populateFormData = () => {
+        formData.id=payload.id
+        formData.category=payload.category
+        formData.name=payload.name
+        formData.taxonomy=payload.taxonomy
+        formData.etymology=payload.etymology
+        formData.geo=payload.geo
+        formData.migration=payload.migration
+        formData.habitat=payload.habitat
+        formData.dimensions=payload.dimensions
+        formData.ds=payload.ds
+        formData.diet=payload.diet
+        formData.description=payload.description
+    }
+
     const handleSubmit = async (e) => {
+        formData.id = payload.id;
+
         if (!dataChanged) {
           console.log("nothing has changed")
           return
+        } else {
+          populateFormData();
         }
         setIsButtonDisabled(true);
 
@@ -135,13 +150,7 @@ function Edit() {
         return;
       }
 
-      setSuccessVisible(true);
-      setSuccessVisible(false);
-      setErrorVisible(true);
-
-      setErrorVisible(false);
-
-      /*try {
+      try {
         var response = await Axios.put('https://anidexapi-production.up.railway.app/animal', formData, {headers});
         
         if (response.data.error === "Token is expired") {
@@ -150,20 +159,12 @@ function Edit() {
           return
         }
         setIsButtonDisabled(false);
-        setSuccessVisible(true);
+        navigate(-1);
       } catch (error) {
         // Handle errors
         console.error('Error:', error);
         setIsButtonDisabled(false);
-        setErrorVisible(true);
       }
-  
-      setTimeout(() => {
-        onClose();
-        setSuccessVisible(false);
-        setErrorVisible(false);
-        navigate(0)
-      }, 2500);*/
     }
 
     const handleInputChange = (e) => {
@@ -321,18 +322,6 @@ function Edit() {
           </div>
         </form>
       </div>}
-      {isSuccessVisible && (
-        <div className="success-message">
-          <i className="fas fa-check-circle fa-5x"></i>
-          <p className="success-text">Specie animale modificata!</p>
-        </div>
-      )};
-      {isErrorVisible && (
-        <div className="error-feedback">
-          <i className="fas fa-exclamation-circle fa-5x"></i>
-          <p className="error-text">Qualcosa e' andato storto!</p>
-        </div>
-      )};
         </>
         
     )
